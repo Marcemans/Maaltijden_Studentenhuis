@@ -16,9 +16,9 @@ For all endpoints below you must use this token in the header (`X-Access-Token`)
 - **Get meal:** `GET [URL/meal/:id]`
     - Return: title, desc, joined_people[name, guest], max_amount
 - **Join meal:** `POST [URL/meal/join]` 
-    - Body: meal_id, user_id, guest_amount
+    - Body: meal_id, guest_amount
 - **Leave meal:** `POST [URL/meal/leave]`
-    - Body: meal_id, user_id
+    - Body: meal_id
 - **Get image:** `GET [api/v1/meal/img/:imgName]`
     - Return: image
 
