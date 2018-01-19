@@ -3,15 +3,13 @@ var connection = require('../config/connection');
 module.exports = {
     leaveMealById(req, res, next) {
         var body = req.body;
+        var user = req.user;
 
-         if (
-             (typeof body.meal_id !== 'undefined' && body.meal_id) &&
-             (typeof body.user_id !== 'undefined' && body.user_id)
-         ){ 
+         if (typeof body.meal_id !== 'undefined' && body.meal_id) { 
              // Leave meal by ID
-             var query = 'DELETE FROM meals_users WHERE meal_id = ' + body.meal_id + ' AND user_id = ' + body.user_id;
+             var query = 'DELETE FROM meals_users WHERE meal_id = ? AND user_id = ?';
 
-            connection.query(query, function (error, rows, fields) {
+            connection.query(query, [body.meal_id, user], function (error, rows, fields) {
                 if (error) {
                     next(error);
                 } else {

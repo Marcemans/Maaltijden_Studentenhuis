@@ -3,10 +3,10 @@ var connection = require('../config/connection');
 module.exports = {    
     joinMealById(req, res, next) {
         var body = req.body;
+        var user = req.user;
 
         if (
             (typeof body.meal_id !== 'undefined' && body.meal_id) &&
-            (typeof body.user_id !== 'undefined' && body.user_id) &&
             (typeof body.guest_amount !== 'undefined')
         ){
             //Add yourself as guest
@@ -19,7 +19,7 @@ module.exports = {
                 // Join meal
                 var query = 'INSERT INTO meals_users SET ?';
                 
-                connection.query(query, {meal_id: body.meal_id, user_id: body.user_id, guest_amount: body.guest_amount}, function (error, rows, fields) {
+                connection.query(query, {meal_id: body.meal_id, user_id: user, guest_amount: body.guest_amount}, function (error, rows, fields) {
                     if (error) {
                         next(error);
                     } else {
