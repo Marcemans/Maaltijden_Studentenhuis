@@ -178,7 +178,7 @@ function checkPassword(password, res){
                 resolve();
             }
             else{
-                reject('Gebruik een sterk wachtwoord.');
+                reject('Gebruik een sterk wachtwoord (6 karakters & 2 speciale tekens & 1 digit)');
             }
         }
     );
