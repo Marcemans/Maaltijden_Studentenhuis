@@ -1,6 +1,15 @@
 # Maaltijden Studentenhuis
 ## Endpoints
-
+- **check login status:** 'get [URL/check]'
+    - Return: status: message: 'ingelogd'
+-**get current user:** 'get [URL/user]'
+    - Return: 
+    message: 'User details',
+        user:{
+            name: user.name,
+            id: user.id,
+            email: user.email
+        }
 - **Register:** `POST [URL/register]`
     - Body: name, email, password (6 karakters & 2 speciale tekens & 1 digit), secret_key
 - **Login:** `POST [URL/login]` 
