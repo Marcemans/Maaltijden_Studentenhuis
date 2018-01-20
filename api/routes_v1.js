@@ -1,8 +1,6 @@
 // Dependencies
 var express = require('express');
 var routes = express.Router();
-var multer = require('multer');
-var upload = multer({ dest: 'uploads/' });
 var jwt = require('jwt-simple');
 var moment = require('moment');
 
@@ -40,7 +38,7 @@ routes.get('/meal/img/:imgName', meal.getImage);
 routes.post('/meal/leave', leaveMeal.leaveMealById);
 
 routes.post('/meal/join', joinMeal.joinMealById);
-routes.post('/meal/new', upload.single('newMealImg'), newMeal.newMeal);
+routes.post('/meal/new', newMeal.newMeal);
 
 routes.post('/register', account.register);
 routes.post('/login',account.login);
