@@ -2,7 +2,7 @@
 ## Endpoints
 - **check login status:** 'get [URL/check]'
     - Return: status: message: 'ingelogd'
--**get current user:** 'get [URL/user]'
+- **get current user:** 'get [URL/user]'
     - Return: 
     message: 'User details',
         user:{
