@@ -33,16 +33,22 @@ module.exports = {
     //validate login + web token creation
     login(req, res) {
         var password = req.body.password;
-        console.log(req.body.email);
-        getUser(req.body.email ||'',res, function(user){
+        getUser(req.body.email,res, function(user){
             if(user.length != 0 ){
                 bcrypt.compare(password, user[0].password, function(err, check) {
                     if(check){
+                        var sub ={
+                            user:{
+                                name: user[0].name,
+                                id: user[0].id,
+                                email: user[0].email
+                            }
+                        }
                         console.log(check);
                         const payload ={
                             exp: moment().add(10,'days').unix(),
                             iat: moment().unix(),
-                            sub: user[0].name
+                            sub: sub
                         };
                         var token = jwt.encode(payload, config.secret_key);
                         res.status(200).json({
@@ -168,7 +174,7 @@ function checkName(name, res){
 function checkPassword(password, res){
     return new Promise(
         function (resolve, reject){
-            if((password.length >= 6 && /\d/.test(password) && /\W/.test(password))){
+            if((password.length >= 6 && /\d/.test(password) && /\W{2,}/.test(password))){
                 resolve();
             }
             else{
