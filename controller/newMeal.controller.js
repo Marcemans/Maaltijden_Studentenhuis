@@ -6,7 +6,6 @@ module.exports = {
     newMeal(req, res, next) {
         var newMealReq = req.body;
         var user = req.user;
-        console.log(user);
 
         var query = 'SELECT * FROM users WHERE id=?';
 
