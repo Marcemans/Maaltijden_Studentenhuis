@@ -2,7 +2,14 @@
 var mysql = require('mysql');
 
 // Config files
-var db = require('./db');
+var db;
+try{
+  db = require('./db');
+}catch(ex){
+  var dbGen = require('./db.heroku');
+  db = dbGen.generate();
+}
+
 
 // TUTORIAL: http://sudoall.com/node-js-handling-mysql-disconnects/
 var connection;
