@@ -7,6 +7,42 @@ var moment = require('moment');
 const saltRounds = 10;
 
 module.exports = {
+	//check login status
+	check(req,res){
+		res.status(200).json({
+            status:{
+                message: 'Ingelogd'
+            }
+        }).end();
+	},
+	//get current user
+	getUser(req, res){
+		var id = req.user.id;
+		db.query('select * from users where id = ?',id , function(error, rows){
+			if(rows.length == 1){
+				var user = rows[0];
+				res.status(200).json({
+		            status:{
+		                message: 'User details',
+		                user:{
+		                	name: user.name,
+		                	id: user.id,
+		                	email: user.email
+		                }
+		            }
+		        }).end();
+			}
+			else{
+				res.status(400).json({
+                    status:{
+                        message: 'Er ging iets mis'
+                    }
+                }).end();
+			}
+		});
+		
+	},
+
     //register a new user
     register(req, res) {
         //get post values
@@ -33,7 +69,7 @@ module.exports = {
     //validate login + web token creation
     login(req, res) {
         var password = req.body.password;
-        getUser(req.body.email,res, function(user){
+        getUser(req.body.email,res ||"", function(user){
             if(user.length != 0 ){
                 bcrypt.compare(password, user[0].password, function(err, check) {
                     if(check){

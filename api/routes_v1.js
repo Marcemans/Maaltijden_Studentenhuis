@@ -42,6 +42,8 @@ routes.post('/meal/new', newMeal.newMeal);
 
 routes.post('/register', account.register);
 routes.post('/login',account.login);
+routes.get('/check',account.check);
+routes.get('/user',account.getUser);
 
 module.exports = routes;
 
