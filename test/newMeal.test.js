@@ -2,6 +2,7 @@
 var chai = require('chai');
 var chaiHttp = require('chai-http');
 var fs = require("fs");
+var jwt = require('jwt-simple');
 
 // Files
 var server = require('../server.js');
@@ -30,6 +31,7 @@ let login_details = {
 var imgFileNameYear = '2030'; // Change this to the year of the datetime-field
 
 var token;
+var userId;
 
 describe('newMeal API interface',function(){
     beforeEach((done) => {
@@ -42,6 +44,7 @@ describe('newMeal API interface',function(){
             .send(login_details)
             .end((err, res) => {
                 token = res.body.status.token;
+                userId = jwt.decode(token, config.secret_key).sub.user.id;
                 done();
             });
         });
@@ -50,7 +53,7 @@ describe('newMeal API interface',function(){
     afterEach((done) => {
         db.query('DELETE FROM `users` WHERE `email` = ?', register_details.email, function(error){
             if(error) console.log(error);
-            db.query('DELETE FROM `meals` WHERE user_id = ?', 3 /* Should be user_id from login response! */, function (error) {
+            db.query('DELETE FROM `meals` WHERE user_id = ?', userId, function (error) {
                 if(error) console.log(error);
                 done();
             });
