@@ -12,14 +12,14 @@ module.exports = {
             //Add yourself as guest
             body.guest_amount++;
             
-            var userAlreadyJoined = checkUserAlreadyJoined(body.meal_id, body.user_id);
+            var userAlreadyJoined = checkUserAlreadyJoined(body.meal_id, user.id);
             var maxAmount = checkMaxAmount(body.meal_id, body.guest_amount);
             
             Promise.all([userAlreadyJoined, maxAmount]).then(() => {
                 // Join meal
                 var query = 'INSERT INTO meals_users SET ?';
                 
-                connection.query(query, {meal_id: body.meal_id, user_id: user, guest_amount: body.guest_amount}, function (error, rows, fields) {
+                connection.query(query, {meal_id: body.meal_id, user_id: user.id, guest_amount: body.guest_amount}, function (error, rows, fields) {
                     if (error) {
                         next(error);
                     } else {
