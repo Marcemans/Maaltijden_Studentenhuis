@@ -19,7 +19,7 @@
 For all endpoints below you must use this token in the header (`X-Access-Token`):
 
 - **New meal:** `POST [URL/meal]`
-    - Body: datetime (Y-m-d H:i:s), title, desc, max_people, image
+    - Body: datetime (Y-m-d H:i:s), title, desc, price, max_people, image
 - **Get all meals:** `GET [URL/meals]`
     - Return: id, title, amount (joined people), max_amount, price, image
 - **Get meal:** `GET [URL/meal/:id]`
@@ -35,7 +35,6 @@ For all endpoints below you must use this token in the header (`X-Access-Token`)
 
 - Run `npm install`
 - Copy `config/db.example.json` to `config/db.json` and change values
-- Make folder `uploads/meal_img` in rootdir
 - Run `npm start`
 
 ## Packages
