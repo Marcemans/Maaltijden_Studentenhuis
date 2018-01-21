@@ -38,7 +38,7 @@ function checkNewMealReq(newMealReq){
     var date = new Date(newMealReq.datetime);
     var curDate = new Date();
     
-    if(curDate > date || newMealReq.title == undefined || newMealReq.desc == undefined || newMealReq.image == undefined || newMealReq.max_people < 2){
+    if(curDate > date || newMealReq.title == undefined || newMealReq.desc == undefined || newMealReq.image == undefined || newMealReq.price == undefined || newMealReq.max_people < 2){
         return false;
     }
     return true;
@@ -46,7 +46,7 @@ function checkNewMealReq(newMealReq){
 
 //Inserts new meal into DB
 function insertNewMeal(newMealReq, userId, res){
-    connection.query('INSERT INTO meals SET ?', {title: newMealReq.title, description: newMealReq.desc, datetime: newMealReq.datetime, max_amount: newMealReq.max_people, user_id: userId, image: newMealReq.image}, function (error, results, fields) {
+    connection.query('INSERT INTO meals SET ?', {title: newMealReq.title, description: newMealReq.desc, datetime: newMealReq.datetime, price: newMealReq.price, max_amount: newMealReq.max_people, user_id: userId, image: newMealReq.image}, function (error, results, fields) {
         if(error){
             console.log(error);
             res.status(500).json({
