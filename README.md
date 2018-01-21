@@ -1,8 +1,8 @@
 # Maaltijden Studentenhuis
 ## Endpoints
-- **check login status:** 'get [URL/check]'
+- **Check login status:** `get [URL/check]`
     - Return: status: message: 'ingelogd'
-- **get current user:** 'get [URL/user]'
+- **Get current user:** `get [URL/user]`
     - Return: 
     message: 'User details',
         user:{
@@ -21,9 +21,9 @@ For all endpoints below you must use this token in the header (`X-Access-Token`)
 - **New meal:** `POST [URL/meal]`
     - Body: datetime (Y-m-d H:i:s), title, desc, max_people, image
 - **Get all meals:** `GET [URL/meals]`
-    - Return: title, amount (joined people), max_amount
+    - Return: id, title, amount (joined people), max_amount, price, image
 - **Get meal:** `GET [URL/meal/:id]`
-    - Return: title, desc, joined_people[name, guest], max_amount
+    - Return: id, title, desc, joined_people[name, guest], max_amount, price, image
 - **Join meal:** `POST [URL/meal/join]` 
     - Body: meal_id, guest_amount
 - **Leave meal:** `POST [URL/meal/leave]`
