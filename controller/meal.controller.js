@@ -43,13 +43,25 @@ module.exports = {
                 }).end();
                 return false;
             } else {
-                res.status(200).json({
-                    status: {
-                        message: 'OK'
-                    },
-                    result: rows
-                }).end();
-                return true;
+                var result = rows;
+                var query = 'SELECT SUM(du.guest_amount - 1) as guest_amount, u.name FROM meals_users du LEFT JOIN users u ON du.user_id = u.id WHERE meal_id = ?';
+                
+                connection.query(query, req.params.id, function (error, rows, fields) {
+                    if (error) {
+                        next(error);
+                        return false;
+                    } else {
+                        result.joined_people = rows;
+
+                        res.status(200).json({
+                            status: {
+                                message: 'OK'
+                            },
+                            result: result
+                        }).end();
+                        return true;
+                    };
+                });
             };
         });
     },
