@@ -62,11 +62,23 @@ function insertNewMeal(newMealReq, userId, res){
                 }
             }).end();
         }else{
+            joinNewMeal(results.insertId, userId);
+            
             res.status(200).json({
                 status: {
                     query: 'OK'
                 }
             }).end();
         }
+    });
+}
+
+function joinNewMeal(mealId, userId) {
+    var query = 'INSERT INTO meals_users SET ?';
+    
+    connection.query(query, {meal_id: mealId, user_id: userId, guest_amount: 1}, function (error, rows, fields) {
+        if (error) {
+            next(error);
+        };
     });
 }
