@@ -29,7 +29,7 @@ module.exports = {
     },
     
     getById(req, res, next) {
-        var query = 'SELECT id, title, description, datetime, image, max_amount, price, user_id FROM meals WHERE id = ?';
+        var query = 'SELECT m.id, m.title, m.description, m.datetime, m.image, m.max_amount, m.price, m.user_id, u.name as user_name FROM meals m LEFT JOIN users u ON m.user_id = u.id WHERE m.id = ?';
         
         connection.query(query, req.params.id, function (error, rows, fields) {
             if (error) {
