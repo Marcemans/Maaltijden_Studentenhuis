@@ -44,7 +44,7 @@ module.exports = {
                 return false;
             } else {
                 var result = rows[0];
-                var query = 'SELECT SUM(du.guest_amount - 1) as guest_amount, u.id, u.name FROM meals_users du LEFT JOIN users u ON du.user_id = u.id WHERE meal_id = ? GROUP BY u.name';
+                var query = 'SELECT SUM(du.guest_amount - 1) as guest_amount, u.id, u.name FROM meals_users du LEFT JOIN users u ON du.user_id = u.id WHERE meal_id = ? GROUP BY u.id';
                 
                 connection.query(query, req.params.id, function (error, rows, fields) {
                     if (error) {
