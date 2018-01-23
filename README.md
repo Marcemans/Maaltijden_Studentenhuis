@@ -1,6 +1,15 @@
 # Maaltijden Studentenhuis
 ## Endpoints
-
+- **Check login status:** `get [URL/check]`
+    - Return: status: message: 'ingelogd'
+- **Get current user:** `get [URL/user]`
+    - Return: 
+    message: 'User details',
+        user:{
+            name: user.name,
+            id: user.id,
+            email: user.email
+        }
 - **Register:** `POST [URL/register]`
     - Body: name, email, password (6 karakters & 2 speciale tekens & 1 digit), secret_key
 - **Login:** `POST [URL/login]` 
@@ -10,15 +19,15 @@
 For all endpoints below you must use this token in the header (`X-Access-Token`):
 
 - **New meal:** `POST [URL/meal]`
-    - Body: datetime (Y-m-d H:i:s), title, desc, max_people, image
+    - Body: datetime (Y-m-d H:i:s), title, desc, price, max_people, image
 - **Get all meals:** `GET [URL/meals]`
-    - Return: title, amount (joined people), max_amount
+    - Return: id, title, amount (joined people), max_amount, price, image
 - **Get meal:** `GET [URL/meal/:id]`
-    - Return: title, desc, joined_people[name, guest], max_amount
+    - Return: id, title, desc, joined_people[name, guest], max_amount, price, image
 - **Join meal:** `POST [URL/meal/join]` 
-    - Body: meal_id, user_id, guest_amount
+    - Body: meal_id, guest_amount
 - **Leave meal:** `POST [URL/meal/leave]`
-    - Body: meal_id, user_id
+    - Body: meal_id
 - **Get image:** `GET [api/v1/meal/img/:imgName]`
     - Return: image
 
@@ -26,7 +35,6 @@ For all endpoints below you must use this token in the header (`X-Access-Token`)
 
 - Run `npm install`
 - Copy `config/db.example.json` to `config/db.json` and change values
-- Make folder `uploads/meal_img` in rootdir
 - Run `npm start`
 
 ## Packages

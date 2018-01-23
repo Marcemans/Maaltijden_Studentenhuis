@@ -3,23 +3,23 @@ var connection = require('../config/connection');
 module.exports = {    
     joinMealById(req, res, next) {
         var body = req.body;
+        var user = req.user;
 
         if (
             (typeof body.meal_id !== 'undefined' && body.meal_id) &&
-            (typeof body.user_id !== 'undefined' && body.user_id) &&
             (typeof body.guest_amount !== 'undefined')
         ){
             //Add yourself as guest
             body.guest_amount++;
             
-            var userAlreadyJoined = checkUserAlreadyJoined(body.meal_id, body.user_id);
+            var userAlreadyJoined = checkUserAlreadyJoined(body.meal_id, user.id);
             var maxAmount = checkMaxAmount(body.meal_id, body.guest_amount);
             
             Promise.all([userAlreadyJoined, maxAmount]).then(() => {
                 // Join meal
                 var query = 'INSERT INTO meals_users SET ?';
                 
-                connection.query(query, {meal_id: body.meal_id, user_id: body.user_id, guest_amount: body.guest_amount}, function (error, rows, fields) {
+                connection.query(query, {meal_id: body.meal_id, user_id: user.id, guest_amount: body.guest_amount}, function (error, rows, fields) {
                     if (error) {
                         next(error);
                     } else {

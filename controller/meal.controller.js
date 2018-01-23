@@ -3,7 +3,7 @@ var connection = require('../config/connection');
 
 module.exports = {
     getAll(req, res, next) {
-        var query = 'SELECT m.id, m.title, m.description, m.datetime, m.max_amount, m.user_id, (SELECT SUM(mu.guest_amount) FROM meals_users mu WHERE mu.meal_id = m.id) AS amount FROM meals m';
+        var query = 'SELECT m.id, m.title, m.description, m.datetime, m.image, m.max_amount, m.price, m.user_id, (SELECT SUM(mu.guest_amount) FROM meals_users mu WHERE mu.meal_id = m.id) AS amount FROM meals m';
         
         connection.query(query, function (error, rows, fields) {
             if (error) {
@@ -29,7 +29,7 @@ module.exports = {
     },
     
     getById(req, res, next) {
-        var query = 'SELECT id, title, description, datetime, image, max_amount, user_id FROM meals WHERE id = ?';
+        var query = 'SELECT m.id, m.title, m.description, m.datetime, m.image, m.max_amount, m.price, m.user_id, u.name as user_name FROM meals m LEFT JOIN users u ON m.user_id = u.id WHERE m.id = ?';
         
         connection.query(query, req.params.id, function (error, rows, fields) {
             if (error) {
@@ -43,13 +43,25 @@ module.exports = {
                 }).end();
                 return false;
             } else {
-                res.status(200).json({
-                    status: {
-                        message: 'OK'
-                    },
-                    result: rows
-                }).end();
-                return true;
+                var result = rows[0];
+                var query = 'SELECT SUM(du.guest_amount - 1) as guest_amount, du.id, u.id as user_id, u.name FROM meals_users du LEFT JOIN users u ON du.user_id = u.id WHERE meal_id = ? GROUP BY u.id';
+                
+                connection.query(query, req.params.id, function (error, rows, fields) {
+                    if (error) {
+                        next(error);
+                        return false;
+                    } else {
+                        result.joined_people = rows;
+
+                        res.status(200).json({
+                            status: {
+                                message: 'OK'
+                            },
+                            result: result
+                        }).end();
+                        return true;
+                    };
+                });
             };
         });
     },
