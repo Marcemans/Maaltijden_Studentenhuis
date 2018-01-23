@@ -38,7 +38,7 @@ function checkNewMealReq(newMealReq){
     var date = new Date(newMealReq.datetime);
     var curDate = new Date();
     
-    if(curDate > date || newMealReq.title == undefined || newMealReq.desc == undefined || newMealReq.image == undefined || newMealReq.price == undefined || newMealReq.max_people < 2){
+    if(curDate > date || newMealReq.title == undefined || newMealReq.desc == undefined || newMealReq.price == undefined || newMealReq.max_people < 2){
         return false;
     }
     return true;
