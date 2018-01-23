@@ -11,7 +11,7 @@
             email: user.email
         }
 - **Register:** `POST [URL/register]`
-    - Body: name, email, password (6 karakters & 2 speciale tekens & 1 digit), secret_key
+    - Body: name, email, password (6 karakters & 2 niet woord tekens & 1 digit), secret_key
 - **Login:** `POST [URL/login]` 
     - Body: email, password
     - Return: token
