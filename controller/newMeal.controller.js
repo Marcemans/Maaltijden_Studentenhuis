@@ -62,7 +62,10 @@ function insertNewMeal(newMealReq, userId, res){
                 }
             }).end();
         }else{
-            joinNewMeal(results.insertId, userId);
+            if(newMealReq.guest_amount == undefined){
+                newMealReq.guest_amount = 0;
+            }
+            joinNewMeal(results.insertId, userId, newMealReq.guest_amount);
             
             res.status(200).json({
                 status: {
@@ -73,10 +76,12 @@ function insertNewMeal(newMealReq, userId, res){
     });
 }
 
-function joinNewMeal(mealId, userId) {
+function joinNewMeal(mealId, userId, guests) {
     var query = 'INSERT INTO meals_users SET ?';
+
+    guests++;
     
-    connection.query(query, {meal_id: mealId, user_id: userId, guest_amount: 1}, function (error, rows, fields) {
+    connection.query(query, {meal_id: mealId, user_id: userId, guest_amount: guests}, function (error, rows, fields) {
         if (error) {
             next(error);
         };

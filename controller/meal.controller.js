@@ -3,7 +3,7 @@ var connection = require('../config/connection');
 
 module.exports = {
     getAll(req, res, next) {
-        var query = 'SELECT m.id, m.title, m.description, m.datetime, m.image, m.max_amount, m.price, m.user_id, (SELECT SUM(mu.guest_amount) FROM meals_users mu WHERE mu.meal_id = m.id) AS amount FROM meals m';
+        var query = 'SELECT m.id, m.title, m.description, m.datetime, m.image, m.max_amount, m.price, m.user_id, u.name, (SELECT SUM(mu.guest_amount) FROM meals_users mu WHERE mu.meal_id = m.id) AS amount FROM meals m LEFT JOIN users u ON u.id = m.user_id';
         
         connection.query(query, function (error, rows, fields) {
             if (error) {
