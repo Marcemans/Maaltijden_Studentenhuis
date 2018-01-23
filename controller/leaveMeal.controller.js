@@ -9,7 +9,7 @@ module.exports = {
              // Leave meal by ID
              var query = 'DELETE FROM meals_users WHERE meal_id = ? AND user_id = ?';
 
-            connection.query(query, [body.meal_id, user], function (error, rows, fields) {
+            connection.query(query, [body.meal_id, user.id], function (error, rows, fields) {
                 if (error) {
                     next(error);
                 } else {
